@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Start') {
+            steps {
+                echo 'Account is accessed'
+            }
+        }
+        stage('Buid') {
+            steps {
+                echo 'Building account service'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying account service'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing service'
+            }
+        }
+        stage('Release') {
+            steps {
+                echo 'Releasing account service'
+            }
+        }
+    }
+}

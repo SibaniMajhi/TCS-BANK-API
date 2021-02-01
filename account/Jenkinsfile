@@ -2,30 +2,38 @@ pipeline {
     agent any
 
     stages {
-        stage('Start') {
+        stage('Check Out Code') {
             steps {
-                echo 'Account is accessed'
+                // Get some code from a GitHub repository
+                git 'https://github.com/SibaniMajhi/TCS-BANK-API.git'
+            }
+
+            }
+            
+        stage('Run Test Cases') {
+            steps {
+                bat  "mvn clean test"
             }
         }
-        stage('Buid') {
+        
+        stage('Publish Test Reports') {
             steps {
-                echo 'Building account service'
+                junit '**/target/surefire-reports/TEST-*.xml'
             }
         }
-        stage('Deploy') {
+        
+        stage('Build Code') {
             steps {
-                echo 'Deploying account service'
+                bat "mvn package -DskipTests=true"
             }
         }
-        stage('Test') {
+        
+        stage('Archieve Results') {
             steps {
-                echo 'Testing service'
-            }
-        }
-        stage('Release') {
-            steps {
-                echo 'Releasing account service'
+                archiveArtifacts 'target/*.war'
             }
         }
     }
 }
+
+
